@@ -1,31 +1,46 @@
 #!/usr/bin/python3
+""" Class factor_file """
+from sys import argv
+from math import sqrt
 
-import sys
 
-def fc():
-    """
-    Function fc to search file to convert number and format n = p * q
-    """
+class factor_file:
+    """ init """
+    def __init__(self, filename):
+        """check if
+        file is not NULL
+        """
+        if filename is not None:
+            self.filename = filename
 
-    try:
-        revfile = sys.argv[1]
-        with open(revfile) as f:
-            for prime_num in f:
-                prime_num = int(prime_num)
-                if prime_num % 2 == 0:
-                        print("{}={}*{}".format(prime_num, prime_num // 2, 2))
-                        continue
-                i = 3
-                while i < (prime_num // 2):
-                    if (prime_num % i) == 0:
-                        print("{}={}*{}".format(prime_num, prime_num // i, i))
-                        break
-                    i = i + 2
-                if i == ((prime_num // 2) + 1):
-                    print("{}={}*{}".format(prime_num, prime_num, 1))
+    def open_read_file(self):
+        """read from file
+        add to array
+        """
+        with open(self.filename, encoding="utf-8") as file:
+            lines = file.readlines()
+        number_to_factor = []
+        for line in lines:
+            number_to_factor.append(int(line))
+        return number_to_factor
 
-    except (IndexError):
-        pass
+    def factorial(self, n):
+        """factor each
+        n given
+        """
+        for i in range(2, n):
+            if n == ((n // i) * i):
+                print("{}={}*{}".format(n, (n // i), i))
+                break
 
-# auto start
-fc()
+    def factor_each_n_in_lis(self):
+        """factor each
+        num in ls
+        """
+        ls = self.open_read_file()
+        for n in ls:
+            self.factorial(n)
+
+
+for i in range(1, len(argv)):
+    factor_file(argv[i]).factor_each_n_in_lis()
